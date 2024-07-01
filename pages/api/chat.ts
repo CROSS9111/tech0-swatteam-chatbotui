@@ -1,6 +1,6 @@
 import { DEFAULT_SYSTEM_PROMPT, DEFAULT_TEMPERATURE } from '@/utils/app/const';
 import { OpenAIError, OpenAIStream } from '@/utils/server';
-import { saveToCosmosDB } from './cosmos'; // インポートを追加
+import saveToCosmosDB from './cosmos'; // インポートを追加
 
 import { ChatBody, Message } from '@/types/chat';
 // @ts-expect-error
@@ -58,7 +58,7 @@ const handler = async (req: Request): Promise<Response> => {
     const reader = stream.getReader();
     const decoder = new TextDecoder();
     let responseText = '';
-    
+
     (async () => {
       let done = false;
       while (!done) {

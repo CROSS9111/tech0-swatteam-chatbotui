@@ -1,12 +1,16 @@
 const { CosmosClient } = require("@azure/cosmos");
 
-const endpoint = process.env.COSMOS_DB_ENDPOINT;
-const key = process.env.COSMOS_DB_KEY;
-const client = new CosmosClient({ endpoint, key });
 const databaseId = process.env.COSMOS_DB_ID;
 const containerId = process.env.COSMOS_CON_ID;
+const endpoint = "https://cosmosdb-entchatgpt-kizoe.documents.azure.com:443/"; 
+//URLは直接入力でないとエラー
+const key = process.env.COSMOS_DB_KEY;
+const client = new CosmosClient({ endpoint, key });
 
-export const saveToCosmosDB = async (item: any) => {
+const saveToCosmosDB = async (item: any) => {    
+
+    console.log("item",item)
+
     const container = client.database(databaseId).container(containerId);
     try {
         const { resource: createdItem } = await container.items.create(item);
@@ -18,3 +22,5 @@ export const saveToCosmosDB = async (item: any) => {
         throw new Error(`Failed to save item to Cosmos DB: ${anyError.message}`);
     }
 };
+
+export default saveToCosmosDB;
